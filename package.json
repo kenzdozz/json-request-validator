@@ -6,14 +6,16 @@
   "scripts": {
     "postinstall": "npm run build",
     "build": "babel ./ -d dist --copy-files --ignore 'node_modules, dist' ",
-    "test": "NODE_ENV=test mocha --require babel-register --exit"
+    "test": "NODE_ENV=test mocha --require babel-register --exit",
+    "cover": "nyc mocha --require babel-register --recursive --exit"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.7.0"
+    "babel-preset-env": "^1.7.0",
+    "nyc": "^14.1.1"
   },
   "repository": {
     "type": "git",

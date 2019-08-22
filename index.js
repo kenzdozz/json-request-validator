@@ -5,7 +5,7 @@
 /* eslint-disable no-restricted-syntax */
 
 import Checkers, {
-  checkArray, checkBelongsto, checkEachBelongsTo, checkEmail, checkMaxlen, checkMinlen, checkNumber, checkObject, checkRequired, checkUnique,
+  checkArray, checkObject, checkRequired, checkUnique,
 } from './Checkers';
 
 // eslint-disable-next-line no-extend-native
@@ -121,13 +121,6 @@ const validator = async (body, validationRules, arrOuterField = '', arrIndex = n
       if (rule === 'required') ruleIsValid = checkRequired(bodyParam);
       if (bodyParam) {
         if (rule === 'unique') ruleIsValid = await checkUnique(bodyParam, ruleItem);
-        else if (rule === 'email') ruleIsValid = checkEmail(bodyParam);
-        else if (rule === 'number') ruleIsValid = checkNumber(bodyParam);
-        else if (rule === 'minlen') ruleIsValid = checkMinlen(bodyParam, ruleItem);
-        else if (rule === 'maxlen') ruleIsValid = checkMaxlen(bodyParam, ruleItem);
-        else if (rule === 'array') ruleIsValid = checkArray(bodyParam);
-        else if (rule === 'belongsto') ruleIsValid = checkBelongsto(bodyParam, ruleItem);
-        else if (rule === 'eachbelongsto') ruleIsValid = checkEachBelongsTo(bodyParam, ruleItem);
         else if (rule === 'arrayobject') {
           ruleIsValid = await checkArrayObject(bodyParam, ruleItem);
         } else if (rule === 'object') {
@@ -138,6 +131,10 @@ const validator = async (body, validationRules, arrOuterField = '', arrIndex = n
             const objectRules = formatRules(ruleItem.object);
             for (const oRule of objectRules) await ruleItemValidator(bodyParam, oRule, outerField);
           }
+        } else {
+          const checker = Checkers(bodyParam, ruleItem);
+          if (!Object.keys(checker).includes(rule)) throw `${rule} does not exist.`;
+          ruleIsValid = checker[rule]();
         }
       }
 
