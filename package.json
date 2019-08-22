@@ -1,0 +1,40 @@
+{
+  "name": "json-request-validator",
+  "version": "1.0.0",
+  "description": "A simple validator for express json requests",
+  "main": "dist/index.js",
+  "scripts": {
+    "postinstall": "npm run build",
+    "build": "babel ./ -d dist --copy-files --ignore 'node_modules, dist' ",
+    "test": "NODE_ENV=test mocha --require babel-register --exit"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kenzdozz/json-request-validator.git"
+  },
+  "keywords": [
+    "express",
+    "json",
+    "validator",
+    "validation",
+    "request",
+    "validate"
+  ],
+  "author": "Kenneth Onah",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kenzdozz/json-request-validator/issues"
+  },
+  "homepage": "https://github.com/kenzdozz/json-request-validator#readme",
+  "dependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.2.0"
+  }
+}
