@@ -1,13 +1,13 @@
 {
   "name": "json-request-validator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple validator for express json requests",
   "main": "dist/index.js",
   "scripts": {
-    "postinstall": "npm run build",
     "build": "babel ./ -d dist --copy-files --ignore 'node_modules, dist' ",
     "test": "NODE_ENV=test mocha --require babel-register --exit",
-    "cover": "nyc mocha --require babel-register --recursive --exit"
+    "cover": "nyc mocha --require babel-register --recursive --exit",
+    "prepublish": "npm run build"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
