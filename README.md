@@ -1,6 +1,3 @@
-# json-request-validator
-A simple validator for express json requests
-
 ## Introduction
 This is a simple validator to validate you `req.body` in your express application.
 
@@ -136,6 +133,3 @@ const rules = {
 };
 ```
 All the validation rules are valid for validating the object fields.
-
-Keywords
-json-request-validator validator validation
