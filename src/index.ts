@@ -19,7 +19,7 @@ String.prototype.capitalize = function () {
  * @param {Object} item
  * @returns {String}
  */
-const getErrorMessage = (rule, item) => {
+const getErrorMessage = (rule: Rule, item: RuleItem) => {
   if (item.messages && item.messages[rule]) return item.messages[rule];
   let message = '';
   const field = item.field.capitalize().replace(/_/g, ' ');
@@ -40,12 +40,12 @@ const getErrorMessage = (rule, item) => {
   return message;
 };
 
-const formatRules = (validationRules) => {
-  let ruleItems = [];
+const formatRules = (validationRules: ValidationRules) => {
+  let ruleItems: Array<RuleItem> = [];
   if (checkObject(validationRules)) {
     for (const key in validationRules) {
       const ruleItemVal = validationRules[key];
-      let ruleItem = { field: key };
+      let ruleItem = <RuleItem>{ field: key };
       if (typeof ruleItemVal === 'string') ruleItem.rules = ruleItemVal;
       else {
         if (!checkObject(ruleItemVal)) throw `Rule ${key} must be an object or a string.`;
@@ -54,7 +54,7 @@ const formatRules = (validationRules) => {
       ruleItems.push(ruleItem);
     }
   } else if (!checkArray(ruleItems)) throw 'ruleItems must be an array or an object';
-  else ruleItems = validationRules;
+  else ruleItems = <Array<RuleItem>>validationRules;
   return ruleItems;
 };
 
@@ -63,7 +63,7 @@ const formatRules = (validationRules) => {
  * @param {Object} body
  * @param {Array} ruleItems
  */
-const validator = async (body, validationRules, arrOuterField = '', arrIndex = null) => {
+const validator = async (body, validationRules: ValidationRules, arrOuterField = '', arrIndex = null): Promise<ValidationResponse> => {
   if (!checkObject(body)) throw 'body must be an object';
   if (!checkRequired(validationRules)) throw 'validationRules must be provided';
 
@@ -75,10 +75,10 @@ const validator = async (body, validationRules, arrOuterField = '', arrIndex = n
   /**
    *
    * @param {Array} inputs
-   * @param {Object} ruleItem
+   * @param {RuleItem} ruleItem
    * @returns {Boolean}
    */
-  const checkArrayObject = async (inputs, ruleItem) => {
+  const checkArrayObject = async (inputs: any, ruleItem: RuleItem): Promise<boolean> => {
     if (!checkArray(inputs)) return false;
     if (!checkObject(ruleItem.arrayobject)) throw `${ruleItem.field} arrayobject must be an object`;
 
@@ -103,10 +103,10 @@ const validator = async (body, validationRules, arrOuterField = '', arrIndex = n
    * @param {String} outerField
    * @param {Number} index
    */
-  const ruleItemValidator = async (data, ruleItem, outerField = '') => {
+  const ruleItemValidator = async (data, ruleItem: RuleItem, outerField = ''): Promise<void> => {
     if (!ruleItem.field || !ruleItem.rules) throw 'Validation Rules must contain "rules and field" properties.';
 
-    let rules = (`${ruleItem.rules}`.toLowerCase()).split('|').filter(item => item);
+    let rules = <Array<Rule>>(`${ruleItem.rules}`.toLowerCase()).split('|').filter(item => item);
     if (rules.includes('required') && rules[0] !== 'required') {
       rules = rules.filter(item => item !== 'required');
       rules.unshift('required');
@@ -128,7 +128,7 @@ const validator = async (body, validationRules, arrOuterField = '', arrIndex = n
           ruleIsValid = checkObject(bodyParam);
           if (ruleIsValid && ruleItem.object) {
             outerField += `${ruleItem.field}.`;
-            const objectRules = formatRules(ruleItem.object);
+            const objectRules = formatRules(<ValidationRules>ruleItem.object);
             for (const oRule of objectRules) await ruleItemValidator(bodyParam, oRule, outerField);
           }
         } else {
@@ -156,9 +156,9 @@ const validator = async (body, validationRules, arrOuterField = '', arrIndex = n
 /**
  * Validates Request with given rules
  * @param {Array} validationRules
- * @param {Boolean} endRequest
+ * @param {Boolean} [endRequest=true]
  */
-const validateInputs2 = (validationRules, endRequest = true) => async (req, res, next) => {
+const validateInputs = (validationRules: ValidationRules, endRequest = true) => async (req, res, next) => {
   const validate = await validator(req.body, validationRules);
   const { errors, hasConflict } = validate;
 
@@ -177,4 +177,4 @@ const validateInputs2 = (validationRules, endRequest = true) => async (req, res,
   return next();
 };
 
-export default validateInputs2;
+export default validateInputs;

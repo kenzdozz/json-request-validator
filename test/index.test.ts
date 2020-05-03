@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import { expect } from 'chai';
-import validateInputs2 from '../index';
+import validateInputs from '../src/index';
 
 const request = async (rules, body = {}) => {
   const req = {
@@ -11,7 +11,7 @@ const request = async (rules, body = {}) => {
     send: data => data,
   };
   const next = () => ({ status: 200 });
-  const validate = await validateInputs2(rules)(req, res, next);
+  const validate = await validateInputs(rules)(req, res, next);
   return validate;
 };
 const User = { items: ['kenzdozz', 'kenzie'], exists: item => User.items.includes(item) };
@@ -79,21 +79,21 @@ describe('Test index', () => {
 
     const res = await request(rules, body);
 
-    expect(res.error).to.deep.eql('Validation errors.');
-    expect(res.fields.firstName).to.deep.eql('FirstName is required.');
-    expect(res.fields.lastName).to.deep.eql('LastName must have maximum length of 6.');
-    expect(res.fields.username).to.deep.eql('Username already exists.');
-    expect(res.fields.age).to.deep.eql('Age must be a number.');
-    expect(res.fields.hobbies).to.deep.eql('Hobbies must be an array.');
-    expect(res.fields.email).to.deep.eql('Email must be a valid email address.');
-    expect(res.fields.password).to.deep.eql('Password must have minimum length of 5.');
-    expect(res.fields.gender).to.deep.eql("Gender must be one of 'Male, Female'.");
-    expect(res.fields.skills).to.deep.eql("Each of Skills must be one of 'Javascript, PHP, CSS, HTML'.");
-    expect(res.fields.skillLevels).to.deep.eql('SkillLevels must be an object.');
-    expect(res.fields['location.lat']).to.deep.eql('Lat is required.');
-    expect(res.fields['location.lng']).to.deep.eql('Lng must be a number.');
-    expect(res.fields['experiences.0.years']).to.deep.eql('Years must be a number.');
-    expect(res.fields['experiences.1.company']).to.deep.eql('Company is required.');
+    expect(res.error).to.deep.equal('Validation errors.');
+    expect(res.fields.firstName).to.deep.equal('FirstName is required.');
+    expect(res.fields.lastName).to.deep.equal('LastName must have maximum length of 6.');
+    expect(res.fields.username).to.deep.equal('Username already exists.');
+    expect(res.fields.age).to.deep.equal('Age must be a number.');
+    expect(res.fields.hobbies).to.deep.equal('Hobbies must be an array.');
+    expect(res.fields.email).to.deep.equal('Email must be a valid email address.');
+    expect(res.fields.password).to.deep.equal('Password must have minimum length of 5.');
+    expect(res.fields.gender).to.deep.equal("Gender must be one of 'Male, Female'.");
+    expect(res.fields.skills).to.deep.equal("Each of Skills must be one of 'Javascript, PHP, CSS, HTML'.");
+    expect(res.fields.skillLevels).to.deep.equal('SkillLevels must be an object.');
+    expect(res.fields['location.lat']).to.deep.equal('Lat is required.');
+    expect(res.fields['location.lng']).to.deep.equal('Lng must be a number.');
+    expect(res.fields['experiences.0.years']).to.deep.equal('Years must be a number.');
+    expect(res.fields['experiences.1.company']).to.deep.equal('Company is required.');
   });
 
   it('Should validate passing rules, all rules covered', async () => {
@@ -117,6 +117,6 @@ describe('Test index', () => {
 
     const res = await request(rules, body);
 
-    expect(res.status).to.deep.eql(200);
+    expect(res.status).to.deep.equal(200);
   });
 });
