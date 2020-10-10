@@ -34,6 +34,7 @@ type Rule = 'required' |
     'object' |
     'minlen' |
     'maxlen' |
+    'string' |
     'belongsto' |
     'arrayobject' |
     'eachbelongsto';

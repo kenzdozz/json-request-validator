@@ -15,6 +15,9 @@ const checkEmail = (input: any) => /^[\w._]+@[\w]+[-.]?[\w]+\.[\w]+$/.test(input
 /** Checks if the input is a number */
 const checkNumber = (input: any) => `${input}`.search(/\D/) < 0;
 
+/** Checks if the input is a number */
+const checkString = (input: any) => typeof input === 'string';
+
 /** Checks if the input is unique in DB */
 const checkUnique = async (input: any, ruleItem: RuleItem) => {
   if (!ruleItem.unique) throw `${ruleItem.field} rules must include 'unique' fields specifying the unique model.`;
@@ -62,12 +65,13 @@ const Checkers = (data, ruleItem: RuleItem) => ({
   maxlen: () => checkMaxlen(data, ruleItem),
   minlen: () => checkMinlen(data, ruleItem),
   number: () => checkNumber(data),
+  string: () => checkString(data),
   object: () => checkObject(data),
   required: () => checkRequired(data),
   unique: () => checkUnique(data, ruleItem),
 });
 
 export {
-  checkArray, checkBelongsto, checkEachBelongsTo, checkEmail, checkMaxlen, checkMinlen, checkNumber, checkObject, checkRequired, checkUnique,
+  checkArray, checkBelongsto, checkEachBelongsTo, checkEmail, checkMaxlen, checkMinlen, checkNumber, checkString, checkObject, checkRequired, checkUnique,
 };
 export default Checkers;

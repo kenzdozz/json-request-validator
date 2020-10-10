@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import { expect } from 'chai';
 import {
-  checkArray, checkBelongsto, checkEachBelongsTo, checkEmail, checkMaxlen, checkMinlen, checkNumber, checkObject, checkRequired, checkUnique,
+  checkArray, checkBelongsto, checkEachBelongsTo, checkEmail, checkMaxlen, checkMinlen, checkNumber, checkString, checkObject, checkRequired, checkUnique,
 } from '../src/Checkers';
 
 describe('Test Checkers', () => {
@@ -52,6 +52,13 @@ describe('Test Checkers', () => {
     expect(checkNumber('66')).to.deep.equal(true);
     expect(checkNumber('66a')).to.deep.equal(false);
     expect(checkNumber('ppp')).to.deep.equal(false);
+  });
+
+  it('Should successfully check if item is a number', () => {
+    expect(checkString(66)).to.deep.equal(false);
+    expect(checkString('66')).to.deep.equal(true);
+    expect(checkString({ foo: 'bar' })).to.deep.equal(false);
+    expect(checkString('ppp')).to.deep.equal(true);
   });
 
   it('Should successfully check if item is an object', () => {

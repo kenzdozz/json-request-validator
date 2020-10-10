@@ -25,6 +25,7 @@ const getErrorMessage = (rule: Rule, item: RuleItem) => {
   const field = item.field.capitalize().replace(/_/g, ' ');
 
   if (rule === 'required') message = `${field} is required.`;
+  else if (rule === 'string') message = `${field} must be a string.`;
   else if (rule === 'unique') message = `${field} already exists.`;
   else if (rule === 'image') message = `${field} must be an image.`;
   else if (rule === 'array') message = `${field} must be an array.`;
@@ -177,4 +178,4 @@ const validateInputs = (validationRules: ValidationRules, endRequest = true) => 
   return next();
 };
 
-export default validateInputs;
+export = validateInputs;

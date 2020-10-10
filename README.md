@@ -10,7 +10,7 @@ const app = express();
 
 const rules = {
     firstName: 'required',
-    lastName: 'required',
+    lastName: 'required|string',
     age: 'required|number',
     hobbies: 'required|array',
     email: 'required|email',
@@ -80,6 +80,7 @@ app.post('/signup', ValidateInputs(rules, false), (req, res) => {
  - `required` - field must be present, Default message `{fieldName} is required.`.
  - `array` - field must contain array of items, Default message `{fieldName} must be an array.`.
  - `number` - field must be numeric, Default message `{fieldName} must be a number.`.
+ - `string` - field must be a string, Default message `{fieldName} must be a string.`.
  - `email` - field must be a valid email, Default message `{fieldName} must be a valid email address.`.
  - `object` - field must be an object, Default message `{fieldName} must be an object.`.
  - `arrayobject` - field must be an array of object, Default message `{fieldName} must be an array of objects.`.

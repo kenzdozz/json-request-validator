@@ -1,6 +1,6 @@
 {
   "name": "json-request-validator",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A simple validator for express json requests",
   "main": "dist/src/index.js",
   "scripts": {
