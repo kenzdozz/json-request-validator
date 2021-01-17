@@ -4,8 +4,9 @@ const checkArray = input => Array.isArray(input);
 /** Checks if the input exists */
 const checkRequired = (input) => {
   if (checkArray(input)) return !!input.length;
+  if (input === 0) return true  
   if (input === false) return true;
-  return !!input;
+  return !!input;  
 };
 const checkObject = (input: any) => typeof input === 'object' && input !== null && !checkArray(input);
 

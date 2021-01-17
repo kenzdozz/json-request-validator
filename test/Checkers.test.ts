@@ -74,6 +74,7 @@ describe('Test Checkers', () => {
     expect(checkRequired(true)).to.deep.equal(true);
     expect(checkRequired(false)).to.deep.equal(true);
     expect(checkRequired('')).to.deep.equal(false);
+    expect(checkRequired(0)).to.deep.equal(true);
     expect(checkRequired(undefined)).to.deep.equal(false);
     expect(checkRequired(null)).to.deep.equal(false);
   });
